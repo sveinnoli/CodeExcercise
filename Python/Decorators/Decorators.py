@@ -1,35 +1,65 @@
-# Example of a function inside a function and returning reference to said inner functions
-def parent(num):
-    def first_child():
-        return "Hi, I am Emma"
+import functools
+import time
 
-    def second_child():
-        return "Call me Liam"
-    
-    if num == 1:
-        return first_child
-    else:
-        return second_child
+# Used to store plugins
+PLUGINS = dict()
 
-print(parent(1)())
-print(parent(2)())
+# Repeats a function
+def do_twice(func):
+    @functools.wraps(func)
+    def wrapper_do_twice(*args, **kwargs):
+        func(*args, **kwargs)
+        return func(*args, **kwargs)
+    return wrapper_do_twice
+
+# Simple boilerplate for decorators
+def decorator(func):
+    @functools.wraps(func)
+    def wrapper_decorator(*args, **kwargs):
+        # Do something before
+        value = func(*args, **kwargs)
+        # Do something after
+        return value
+    return wrapper_decorator
+
+# Times a function
+def timer(func):
+    """Print the runtime of the decorated function"""
+    @functools.wraps(func)
+    def wrapper_timer(*args, **kwargs):
+        start_time = time.perf_counter()  # 1
+        value = func(*args, **kwargs)
+        end_time = time.perf_counter()    # 2
+        runtime = (end_time - start_time) # 3
+        print(f"Finished {func.__name__!r} in {runtime:.4f} secs")
+        return value
+    return wrapper_timer
+
+# Debugs a function
+def debug(func):
+    @functools.wraps(func)
+    def wrapper_debug(*args, **kwargs):
+        args_repr = [repr(a) for a in args]
+        kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
+        signature = ", ".join(args_repr+ kwargs_repr)
+        print(f"Calling {func.__name__}({signature})")
+        value = func(*args, **kwargs)
+        print(f"{func.__name__!r} returned {value!r}")
+        return value
+    return wrapper_debug
+
+# Rate limit a function
+def slow_down(func):
+    @functools.wraps(func)
+    def wrapper_slow_down(*args, **kwargs):
+        time.sleep(1)
+        return func(*args, **kwargs)
+    return wrapper_slow_down
 
 
-# Example demonstrating Decorators
-
-def my_decorator(func):
-    def wrapper():
-        print("Something is happening before function")
-        func()
-        print("Something is happening after function")
-    return wrapper
-
-@my_decorator
-def say_whee():
-    print("Wheeee!")
-
-
-# say_whee = my_decorator(say_whee)
-# say_whee()
-print(say_whee())
+# Plugin
+def register(func):
+    """Registers a function as a plug in"""
+    PLUGINS[func.__name__] = func
+    return func
 
