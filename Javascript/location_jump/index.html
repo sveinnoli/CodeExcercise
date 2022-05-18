@@ -7,7 +7,8 @@
     <title>Document</title>
     <script type="text/javascript"> 
         function menuJump(a) {
-            window.location = window.location.pathname+`?currency=${a.value}`;
+            console.log(window.location);
+            // window.location = window.location.pathname+`?currency=${a.value.toUpperCase()}`;
         }
     
     
@@ -16,7 +17,7 @@
     <script defer="true" type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             let elem = document.querySelector("select");
-            if (window.location.search.match(/currency/i)) {
+            if (window.location.search.match(/\?currency/i)) {
                 elem.value = window.location.search.split("?currency=")[1];
             }
         }, {"once": true});
