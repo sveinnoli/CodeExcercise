@@ -2,11 +2,11 @@ import functools
 users = {"Pete":"123", "Kyle" : "456"}
 
 def is_authenticated(func):
-    functools.wraps(func)
+    @functools.wraps(func) 
     def wrapper_is_authenticated(*args, **kwargs):
         if [user for user in args if user in users]:
             return func(*args, **kwargs)
-        return "Not Authorized"
+        return access_denied()
     return wrapper_is_authenticated
 
 def access_denied():

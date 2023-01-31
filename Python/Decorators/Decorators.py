@@ -52,7 +52,7 @@ def debug(func):
 def slow_down(func):
     @functools.wraps(func)
     def wrapper_slow_down(*args, **kwargs):
-        time.sleep(1)
+        time.sleep(1) 
         return func(*args, **kwargs)
     return wrapper_slow_down
 

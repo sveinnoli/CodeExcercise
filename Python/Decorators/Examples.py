@@ -75,3 +75,6 @@ def randomly_greet(name):
     print(greeter, greeter_func)
     print(f"Using {greeter!r}")
     return greeter_func(name)
+
+randomly_greet("ab")
+print(approximate_e())
