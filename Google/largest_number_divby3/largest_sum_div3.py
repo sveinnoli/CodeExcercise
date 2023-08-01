@@ -1,4 +1,6 @@
+from random import randint
 l1=[1,1,3,4,5,9] # sorted=[9,5,4,3,1,1] solution = 9+5+4+3 = 21
+l1= [randint(1,9) for n in range(100)]# sorted=[9,5,4,3,1,1] solution = 9+5+4+3 = 21
 from math import log
 
 def solution(l):
@@ -38,3 +40,5 @@ def solution(l):
             if log((new_index), 2) == int(log(new_index, 2)):
                 break
         return "".join(map(str, sorted(characters, reverse=True)))
+print(solution(l1))
+

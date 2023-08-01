@@ -7,5 +7,5 @@ actual_param = [
     "am", "enduring", "outstanding", "astonishing", "astounding", "impressive", "revolutionize",
     "recurring", "recollection", "so", "gorgeous", "captivating"
 ]
-for i, w in enumerate(actual_param):
-	print(stutter(w))
+for p in actual_param:
+	print(stutter(p))

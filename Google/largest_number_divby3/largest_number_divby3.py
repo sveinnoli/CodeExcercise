@@ -5,7 +5,7 @@ def solution(l):
     #num permutations=P(n,k) = n!/(n-k)!
     perm = [permutations(map(str, l), r=i) for i in range(len(l), 0, -1)]
     for term in perm:
-        for p in term:
+        for p in term: 
             new_term=int("".join(p))
             if new_term % 3 == 0:
                 return new_term
